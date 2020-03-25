@@ -10,6 +10,8 @@ import SpriteKit
 
 class VirusNode: SKSpriteNode {
 	
+	private var atlasTextures: [SKTexture]?
+	
 	///	Designated initialiser
 	override init(texture: SKTexture?, color: UIColor, size: CGSize) {
 		super.init(
@@ -34,10 +36,26 @@ class VirusNode: SKSpriteNode {
 		self.position = gameSceneFrame.midScreen()
 		self.isUserInteractionEnabled = true
 		
+		self.startAnimation()
+		
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
+	}
+	
+	/*
+	Things that need to be abstracted:
+		- Fetching SKTextureAtlas
+		- Extracting SKTexture's
+		- Pulsating animation
+	*/
+	private func startAnimation() {
+		//	Retrieve atlas
+		let atlas: SKTextureAtlas = SKTextureAtlas(named: "Virus")
+		let textures: [SKTexture] = atlas.textureNames.sorted().map { atlas.textureNamed($0) }
+
+		self.run(SKAction.pulsateForever(with: textures, timePerFrame: 1.0 / 60.0), withKey: "virusPulsating")
 	}
 	
 	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

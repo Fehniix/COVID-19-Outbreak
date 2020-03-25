@@ -29,8 +29,11 @@ class GameViewController: UIViewController {
 				view.showsNodeCount 	= true
 			}
 			
-			//	Present the scene
-			view.presentScene(scene)
+			//	Experimentation
+			//	Preload atlases into memory
+			SKTextureAtlas.preloadTextureAtlasesNamed(["Coronavirus"]) {error, atlas in
+				view.presentScene(scene)
+			}
 		}
     }
 

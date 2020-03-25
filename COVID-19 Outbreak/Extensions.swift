@@ -19,3 +19,12 @@ extension CGFloat {
 		return 1 / self
 	}
 }
+
+extension SKAction {
+	public static func pulsateForever(with textures: [SKTexture], timePerFrame sec: TimeInterval) -> SKAction {
+		let animForwards = SKAction.animate(with: textures, timePerFrame: sec)
+		let animBackwards = animForwards.reversed()
+		
+		return SKAction.repeatForever(SKAction.sequence([animForwards, animBackwards]))
+	}
+}
