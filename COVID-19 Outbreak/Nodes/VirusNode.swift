@@ -44,16 +44,10 @@ class VirusNode: SKSpriteNode {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
-	/*
-	Things that need to be abstracted:
-		- Fetching SKTextureAtlas
-		- Extracting SKTexture's
-		- Pulsating animation
-	*/
 	private func startAnimation() {
 		//	Retrieve atlas
 		let atlas: SKTextureAtlas = SKTextureAtlas(named: "Virus")
-		let textures: [SKTexture] = atlas.textureNames.sorted().map { atlas.textureNamed($0) }
+		let textures: [SKTexture] = atlas.textures
 
 		self.run(SKAction.pulsateForever(with: textures, timePerFrame: 1.0 / 60.0), withKey: "virusPulsating")
 	}
