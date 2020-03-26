@@ -10,8 +10,6 @@ import SpriteKit
 
 class VirusNode: SKSpriteNode {
 	
-	private var atlasTextures: [SKTexture]?
-	
 	///	Designated initialiser
 	override init(texture: SKTexture?, color: UIColor, size: CGSize) {
 		super.init(
