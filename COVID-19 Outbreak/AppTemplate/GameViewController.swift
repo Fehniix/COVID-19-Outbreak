@@ -15,8 +15,8 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         
 		if let view = self.view as! SKView? {
-			let scene 					= VirusScene(size: view.bounds.size)
-			
+			//let scene 					= VirusScene(size: view.bounds.size)
+			let scene = MasterScene()
 			//	Set the scale mode to scale to fill the window
 			scene.scaleMode 			= .aspectFill
 			
@@ -34,7 +34,7 @@ class GameViewController: UIViewController {
 			
 			//	Experimentation
 			//	Preload atlases into memory
-			SKTextureAtlas.preloadTextureAtlasesNamed(["Coronavirus"]) {error, atlas in
+			SKTextureAtlas.preloadTextureAtlasesNamed(["Virus"]) {error, atlas in
 				view.presentScene(scene)
 			}
 		}

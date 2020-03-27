@@ -31,7 +31,7 @@ class VirusNode: SKSpriteNode {
 				height: gameSceneFrame.width / 2)
 		)
 		
-		self.position = gameSceneFrame.midScreen()
+		self.position = gameSceneFrame.midPoint()
 		self.isUserInteractionEnabled = true
 		
 		self.startAnimation()

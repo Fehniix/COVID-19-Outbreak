@@ -16,15 +16,17 @@ This scene additionally handles UIPanGesture and UISwipeGesture, to switch betwe
 class MasterScene: SKScene {
 	
 	//	Scenes to switch between
-	private let shopScene: 		SKNode! = nil
-	private let virusScene: 	SKNode! = nil
-	private let researchScene: 	SKNode! = nil
+	private var shopScene: 		SKNode! = nil
+	private var virusScene: 	SKNode! = nil
+	private var researchScene: 	SKNode! = nil
 	
 	//	Composited master scene, containing all scenes
 	private let masterScene:	SKNode! = nil
 	
 	override func didMove(to view: SKView) {
+		self.shopScene = ShopScene()
 		
+		addChild(self.shopScene)
 	}
 	
 	private func composeMasterScene() {

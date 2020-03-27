@@ -10,14 +10,14 @@ import SpriteKit
 
 extension UIColor {
 	convenience init(withHexCode hex: Int, alpha: CGFloat) {
-		let red 	= ((hex >> 16) & 0xFF) / 255
-		let green 	= ((hex >> 8) & 0xFF) / 255
-		let blue 	= (hex & 0xFF) / 255
+		let red 	= CGFloat((hex >> 16) & 0xFF) / 255
+		let green 	= CGFloat((hex >> 8) & 0xFF) / 255
+		let blue 	= CGFloat(hex & 0xFF) / 255
 		
 		self.init(
-			red: 	CGFloat(red),
-			green: 	CGFloat(green),
-			blue: 	CGFloat(blue),
+			red: 	red,
+			green: 	green,
+			blue: 	blue,
 			alpha: 	alpha
 		)
 	}

@@ -8,19 +8,22 @@
 
 import SpriteKit
 
-class ShopScene: SKNode {
+class ShopScene: SKSpriteNode {
 	
 	//	Global References short alias
 	private let globRefs: GlobalReferences 		= GlobalReferences.shared
 	
 	//	Hierarchically last, defines Scene's bounds.
-	private var backgroundNode: SKShapeNode! 	= nil
+	private var backgroundNode: SKSpriteNode! 	= nil
 	
-	override init() {
-		super.init()
+	override init(texture: SKTexture?, color: UIColor, size: CGSize) {
+		super.init(texture: nil, color: UIColor.clear, size: globRefs.deviceFrame.size)
 		
-		self.backgroundNode 			= SKShapeNode(rect: globRefs.extendedFrame)
-		self.backgroundNode.fillColor 	= ColorPalette.light
+		self.position = CGPoint(x: 0, y: 0)
+		
+		self.backgroundNode = SKSpriteNode(texture: nil, color: ColorPalette.light, size: globRefs.extendedFrame.size)
+		
+		addChild(self.backgroundNode)
 	}
 	
 	required init?(coder aDecoder: NSCoder) {

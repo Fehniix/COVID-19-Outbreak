@@ -9,7 +9,7 @@
 import SpriteKit
 
 extension CGRect {
-	func midScreen() -> CGPoint {
+	func midPoint() -> CGPoint {
 		return CGPoint(x: midX, y: midY)
 	}
 }
