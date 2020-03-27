@@ -1,5 +1,5 @@
 //
-//  Entity.swift
+//  TabBar.swift
 //  COVID-19 Outbreak
 //
 //  Created by Johnny Bueti on 26/03/2020.
@@ -8,8 +8,3 @@
 
 import SpriteKit
 
-protocol Entity {
-	var node: SKSpriteNode? { get set }
-	
-	
-}

@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class GameScene: SKScene {
+class VirusScene: SKScene {
     
 	override func didMove(to view: SKView) {
 		let virusNode = VirusNode(gameSceneFrame: frame)

@@ -54,4 +54,6 @@ class VirusNode: SKSpriteNode {
 		print("tapped")
 	}
 	
+	
+	
 }

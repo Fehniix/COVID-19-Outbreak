@@ -15,7 +15,7 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         
 		if let view = self.view as! SKView? {
-			let scene = GameScene(size: view.bounds.size)
+			let scene 					= VirusScene(size: view.bounds.size)
 			
 			//	Set the scale mode to scale to fill the window
 			scene.scaleMode 			= .aspectFill
@@ -28,6 +28,9 @@ class GameViewController: UIViewController {
 				view.showsFPS 			= true
 				view.showsNodeCount 	= true
 			}
+			
+			//	Setup global references
+			GlobalReferences.shared.deviceFrame = view.bounds
 			
 			//	Experimentation
 			//	Preload atlases into memory
