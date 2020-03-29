@@ -20,8 +20,9 @@
 		14CEB7332430EAF10058F993 /* CGPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CEB7322430EAF10058F993 /* CGPoint.swift */; };
 		14CEB7352430EBD90058F993 /* CGSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CEB7342430EBD90058F993 /* CGSize.swift */; };
 		14CEB7372430F0110058F993 /* SKSpriteNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CEB7362430F0110058F993 /* SKSpriteNode.swift */; };
+		14CEB7392430F7420058F993 /* ResearchSceneNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CEB7382430F7420058F993 /* ResearchSceneNode.swift */; };
 		14E008B52427EFFF004B4538 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E008B42427EFFF004B4538 /* AppDelegate.swift */; };
-		14E008BB2427EFFF004B4538 /* VirusScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E008BA2427EFFF004B4538 /* VirusScene.swift */; };
+		14E008BB2427EFFF004B4538 /* VirusSceneNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E008BA2427EFFF004B4538 /* VirusSceneNode.swift */; };
 		14E008BD2427EFFF004B4538 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E008BC2427EFFF004B4538 /* GameViewController.swift */; };
 		14E008C02427EFFF004B4538 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 14E008BE2427EFFF004B4538 /* Main.storyboard */; };
 		14E008C22427F000004B4538 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14E008C12427F000004B4538 /* Assets.xcassets */; };
@@ -64,9 +65,10 @@
 		14CEB7322430EAF10058F993 /* CGPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGPoint.swift; sourceTree = "<group>"; };
 		14CEB7342430EBD90058F993 /* CGSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGSize.swift; sourceTree = "<group>"; };
 		14CEB7362430F0110058F993 /* SKSpriteNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKSpriteNode.swift; sourceTree = "<group>"; };
+		14CEB7382430F7420058F993 /* ResearchSceneNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResearchSceneNode.swift; sourceTree = "<group>"; };
 		14E008B12427EFFF004B4538 /* COVID-19 Outbreak.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "COVID-19 Outbreak.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		14E008B42427EFFF004B4538 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		14E008BA2427EFFF004B4538 /* VirusScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirusScene.swift; sourceTree = "<group>"; };
+		14E008BA2427EFFF004B4538 /* VirusSceneNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirusSceneNode.swift; sourceTree = "<group>"; };
 		14E008BC2427EFFF004B4538 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		14E008BF2427EFFF004B4538 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		14E008C12427F000004B4538 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -145,8 +147,9 @@
 			isa = PBXGroup;
 			children = (
 				14493B3B242E12A40021CCDF /* MasterScene.swift */,
-				14E008BA2427EFFF004B4538 /* VirusScene.swift */,
+				14E008BA2427EFFF004B4538 /* VirusSceneNode.swift */,
 				14493B3D242E22580021CCDF /* ShopSceneNode.swift */,
+				14CEB7382430F7420058F993 /* ResearchSceneNode.swift */,
 			);
 			path = Scene;
 			sourceTree = "<group>";
@@ -367,13 +370,14 @@
 				14CEB7352430EBD90058F993 /* CGSize.swift in Sources */,
 				14493B19242C95190021CCDF /* CGFloat.swift in Sources */,
 				14CEB7372430F0110058F993 /* SKSpriteNode.swift in Sources */,
-				14E008BB2427EFFF004B4538 /* VirusScene.swift in Sources */,
+				14E008BB2427EFFF004B4538 /* VirusSceneNode.swift in Sources */,
 				14E008ED2428BEC4004B4538 /* SKTextureAtlas.swift in Sources */,
 				14493B3E242E22580021CCDF /* ShopSceneNode.swift in Sources */,
 				14493B17242C94F20021CCDF /* CGRect.swift in Sources */,
 				14493B3C242E12A40021CCDF /* MasterScene.swift in Sources */,
 				14493B40242E238B0021CCDF /* GlobalReferences.swift in Sources */,
 				14E008E92427F21C004B4538 /* Debug.swift in Sources */,
+				14CEB7392430F7420058F993 /* ResearchSceneNode.swift in Sources */,
 				14E008EB2428B607004B4538 /* VirusNode.swift in Sources */,
 				14493B32242D52880021CCDF /* UIColor.swift in Sources */,
 				14E008BD2427EFFF004B4538 /* GameViewController.swift in Sources */,

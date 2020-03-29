@@ -1,5 +1,5 @@
 //
-//  DirectorScene.swift
+//  MasterScene.swift
 //  COVID-19 Outbreak
 //
 //  Created by Johnny Bueti on 27/03/2020.
@@ -37,10 +37,15 @@ class MasterScene: SKScene {
 		self.masterSceneNode 				= SKSpriteNode(texture: nil, color: UIColor.clear, size: self.size)
 		self.masterSceneNode.anchorPoint 	= CGPoint(0, 0)
 		
-		self.shopSceneNode = ShopSceneNode()
+		self.shopSceneNode 	= ShopSceneNode()
+		
+		self.virusSceneNode = VirusSceneNode()
+		self.virusSceneNode.position = CGPoint(GlobalReferences.shared.extendedFrame.width, 0)	// Translate the x-coord. to position aside the ShopScene
 		
 		self.masterSceneNode.addChild(self.shopSceneNode)
+		self.masterSceneNode.addChild(self.virusSceneNode)
 		self.addChild(self.masterSceneNode)
 	}
+	
 	
 }
