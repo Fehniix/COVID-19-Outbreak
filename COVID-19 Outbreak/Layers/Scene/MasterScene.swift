@@ -12,25 +12,35 @@ import SpriteKit
 The `MasterScene` contains the three scenes of the game: shop, research and virus scene.
 The three scenes are all preloaded into memory, laying one along another, with one shown and the others hidden form the users.
 This scene additionally handles UIPanGesture and UISwipeGesture, to switch between scenes and update the TabBarActiveItem.
+
+# Structure
+- The `MasterScene` is an `SKScene`, presented by the `GameViewController`.
+- Each subscene is of type `SKSpriteNode`: that is because many of the necessary methods/properties useful to allow the user to swipe through the tabs (a.k.a. subscenes) are implemented in `SKSpriteNode` and it would be wasteful to re-implement them.
+
+The subscenes are contained in the `masterSceneNode` of size identical to its parent scene. This is the node that will be animated and that will receive and handle user input to swipe/drag.
 */
 class MasterScene: SKScene {
 	
 	//	Scenes to switch between
-	private var shopScene: 		SKNode! = nil
-	private var virusScene: 	SKNode! = nil
-	private var researchScene: 	SKNode! = nil
+	private var shopSceneNode: 		SKSpriteNode! = nil
+	private var virusSceneNode: 	SKSpriteNode! = nil
+	private var researchSceneNode: 	SKSpriteNode! = nil
 	
 	//	Composited master scene, containing all scenes
-	private let masterScene:	SKNode! = nil
+	private var masterSceneNode:	SKSpriteNode! = nil
 	
 	override func didMove(to view: SKView) {
-		self.shopScene = ShopScene()
+		//	The scene's width is three times the extended frame
+		self.size = CGSize(width: GlobalReferences.shared.extendedFrame.width * 3, height: view.frame.size.height)
 		
-		addChild(self.shopScene)
-	}
-	
-	private func composeMasterScene() {
+		//	Creating the masterSceneNode to contain all the other scenes.
+		self.masterSceneNode 				= SKSpriteNode(texture: nil, color: UIColor.clear, size: self.size)
+		self.masterSceneNode.anchorPoint 	= CGPoint(0, 0)
 		
+		self.shopSceneNode = ShopSceneNode()
+		
+		self.masterSceneNode.addChild(self.shopSceneNode)
+		self.addChild(self.masterSceneNode)
 	}
 	
 }

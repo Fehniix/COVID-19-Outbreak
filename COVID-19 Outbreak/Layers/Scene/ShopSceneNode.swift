@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class ShopScene: SKSpriteNode {
+class ShopSceneNode: SKSpriteNode {
 	
 	//	Global References short alias
 	private let globRefs: GlobalReferences 		= GlobalReferences.shared
@@ -17,13 +17,20 @@ class ShopScene: SKSpriteNode {
 	private var backgroundNode: SKSpriteNode! 	= nil
 	
 	override init(texture: SKTexture?, color: UIColor, size: CGSize) {
-		super.init(texture: nil, color: UIColor.clear, size: globRefs.deviceFrame.size)
+		super.init(texture: nil, color: UIColor.clear, size: globRefs.extendedFrame.size)
 		
-		self.position = CGPoint(x: 0, y: 0)
+		self.name 			= "ShopSceneNode"
+		self.anchorPoint 	= CGPoint(0, 0)
 		
-		self.backgroundNode = SKSpriteNode(texture: nil, color: ColorPalette.light, size: globRefs.extendedFrame.size)
+		self.backgroundNode 			= SKSpriteNode(texture: nil, color: ColorPalette.light, size: self.size)
+		self.backgroundNode.anchorPoint = CGPoint(0, 0)
+		self.backgroundNode.name 		= "ShopScene_background"
+		
+		let labelTest = SKLabelNode(text: "Shop Test")
+		labelTest.fontColor = ColorPalette.darkest
 		
 		addChild(self.backgroundNode)
+		addChild(labelTest)
 	}
 	
 	required init?(coder aDecoder: NSCoder) {

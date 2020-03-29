@@ -32,11 +32,8 @@ class GameViewController: UIViewController {
 			//	Setup global references
 			GlobalReferences.shared.deviceFrame = view.bounds
 			
-			//	Experimentation
-			//	Preload atlases into memory
-			SKTextureAtlas.preloadTextureAtlasesNamed(["Virus"]) {error, atlas in
-				view.presentScene(scene)
-			}
+			//	Present Master Scene
+			view.presentScene(scene)
 		}
     }
 

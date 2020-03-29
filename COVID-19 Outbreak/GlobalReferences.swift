@@ -25,7 +25,7 @@ class GlobalReferences {
 		}
 	}
 	
-	/// This property is used by the different draggable scenes
+	/// iPhone frame += 50% width (25% per side), to allow for animation margin.
 	public var extendedFrame: CGRect! = nil
 	
 	private init() {}
