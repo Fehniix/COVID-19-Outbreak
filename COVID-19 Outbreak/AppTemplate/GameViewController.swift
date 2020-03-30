@@ -51,4 +51,9 @@ class GameViewController: UIViewController {
     override var prefersStatusBarHidden: Bool {
         return true
     }
+	
+	//	Hide home indicator.
+	override var prefersHomeIndicatorAutoHidden: Bool {
+		return true
+	}
 }

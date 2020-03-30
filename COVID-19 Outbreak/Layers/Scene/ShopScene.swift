@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class ShopSceneNode: SKSpriteNode {
+class ShopScene: SKSpriteNode {
 	
 	//	Global References short alias
 	private let globRefs: GlobalReferences 		= GlobalReferences.shared
@@ -17,7 +17,7 @@ class ShopSceneNode: SKSpriteNode {
 	private var backgroundNode: SKSpriteNode! 	= nil
 	
 	override init(texture: SKTexture?, color: UIColor, size: CGSize) {
-		super.init(texture: nil, color: ColorPalette.light, size: globRefs.extendedFrame.size)
+		super.init(texture: nil, color: ColorPalette.normal, size: globRefs.extendedFrame.size)
 		
 		self.name 			= "ShopSceneNode"
 		self.anchorPoint 	= CGPoint(0, 0)
