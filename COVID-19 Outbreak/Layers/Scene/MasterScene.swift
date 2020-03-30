@@ -35,6 +35,11 @@ class MasterScene: SKScene {
 	private var swipeRightGR: UISwipeGestureRecognizer! = nil
 	private var swipeLeftGR: UISwipeGestureRecognizer! = nil
 	
+	//	TabBar controller properties
+	private var currentPageIndex: Int 	= 1
+	private var pages: Int			 	= 3
+	private var pageXOffset: CGFloat! 	= nil
+	
 	override func didMove(to view: SKView) {
 		//	The scene's width is three times the extended frame
 		self.size = CGSize(width: GlobalReferences.shared.extendedFrame.width * 3, height: view.frame.size.height)
@@ -58,6 +63,7 @@ class MasterScene: SKScene {
 		
 		//	Add TabBar gesture recognizers
 		self.createGestureRecognizers()
+		self.pageXOffset = GlobalReferences.shared.extendedFrame.width
 	}
 	
 	private func createTabBar() {
@@ -92,10 +98,28 @@ class MasterScene: SKScene {
 
 extension MasterScene {
 	@objc private func handleRightSwipe(gesture: UISwipeGestureRecognizer) {
-		print("right")
+		if (currentPageIndex > 0) {
+			let act = SKAction.moveBy(x: pageXOffset, y: 0, duration: 0.3)
+			act.timingMode = .easeInEaseOut
+			
+			self.masterSceneNode.run(act)
+			
+			currentPageIndex -= 1
+		} else {
+			//	can't do it!
+		}
 	}
 	
 	@objc private func handleLeftSwipe(gesture: UISwipeGestureRecognizer) {
-		print("left")
+		if (currentPageIndex < pages) {
+			let act = SKAction.moveBy(x: -pageXOffset, y: 0, duration: 0.3)
+			act.timingMode = .easeInEaseOut
+			
+			self.masterSceneNode.run(act)
+			
+			currentPageIndex += 1
+		} else {
+			//	can't do it!
+		}
 	}
 }
