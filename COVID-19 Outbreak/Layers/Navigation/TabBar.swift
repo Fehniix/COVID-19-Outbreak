@@ -9,19 +9,59 @@
 import SpriteKit
 
 class TabBarNode: SKSpriteNode {
-	private var activeItemNode: SKSpriteNode!
+	private var shopItemNode:		SKSpriteNode!
+	private var virusItemNode:		SKSpriteNode!
+	private var researchItemNode: 	SKSpriteNode!
+	private var activeItemNode: 	SKSpriteNode!
+	
+	private var activeItemIndex:	Int = 1
 	
 	init() {
 		super.init(
 			texture: SKTexture(imageNamed: "TabBar"),
 			color: UIColor.clear,
 			size: CGSize(GlobalReferences.shared.deviceFrame.width, GlobalReferences.shared.deviceFrame.height / 9.6))
+		self.anchorPoint = CGPoint(0, 0)
+		
+		let itemNodeSide = GlobalReferences.shared.deviceFrame.height / 12
+		let padding = self.frame.width / 6
+		
+		self.shopItemNode = SKSpriteNode(
+			texture: SKTexture(imageNamed: "test"),
+			color: UIColor.clear,
+			size: CGSize(itemNodeSide * 182 / 202, itemNodeSide)
+		)
+		self.shopItemNode.position 		= CGPoint(-self.frame.width / 2 + padding, self.frame.midY)
+		self.shopItemNode.zPosition 	= self.zPosition + 2
+		
+		self.virusItemNode = SKSpriteNode(
+			texture: SKTexture(imageNamed: "test"),
+			color: UIColor.clear,
+			size: CGSize(itemNodeSide * 182 / 202, itemNodeSide)
+		)
+		self.virusItemNode.position 	= CGPoint(0, self.frame.midY)
+		self.virusItemNode.zPosition 	= self.zPosition + 2
+		
+		self.researchItemNode = SKSpriteNode(
+			texture: SKTexture(imageNamed: "test"),
+			color: UIColor.clear,
+			size: CGSize(itemNodeSide * 182 / 202, itemNodeSide)
+		)
+		self.researchItemNode.position 		= CGPoint(self.frame.width / 2 - padding, self.frame.midY)
+		self.researchItemNode.zPosition 	= self.zPosition + 2
 		
 		self.activeItemNode = SKSpriteNode(texture: SKTexture(imageNamed: "TabBar_active"))
 		self.activeItemNode.anchorPoint = CGPoint(0.5, 0)
 		self.activeItemNode.zPosition = self.zPosition + 1
 		
+		self.addChild(self.shopItemNode)
+		self.addChild(self.virusItemNode)
+		self.addChild(self.researchItemNode)
 		self.addChild(self.activeItemNode)
+	}
+	
+	public func updateActiveItem() {
+		
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
