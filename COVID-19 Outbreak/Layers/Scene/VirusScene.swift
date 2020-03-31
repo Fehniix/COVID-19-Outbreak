@@ -23,7 +23,7 @@ class VirusScene: SKSpriteNode {
 		self.anchorPoint 	= CGPoint(0, 0)
 		
 		self.backgroundNode 			= SKSpriteNode(texture: nil, color: UIColor.clear, size: globRefs.deviceFrame.size)
-		self.backgroundNode.position	= CGPoint(self.frame.midX, 0)	// Since the BGNode's anchorPoint is (0,0) and so it parent's, the y coordinate doesn't have to change, otherwise the background parent constraining the objects within the scene would be y-translated.
+		self.backgroundNode.position	= CGPoint(self.frame.midX, 0)	// Since the BGNode's anchorPoint is (0,0) and so its parent, the y coordinate doesn't have to change, otherwise the background parent constraining the objects within the scene would be y-translated.
 		self.backgroundNode.anchorPoint = CGPoint(0.5, 0)
 		self.backgroundNode.name 		= "VirusSceneNode_bg"
 		

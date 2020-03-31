@@ -26,6 +26,7 @@ class ShopScene: SKSpriteNode {
 		self.backgroundNode.position	= CGPoint(self.frame.midX, 0)	// Since the BGNode's anchorPoint is (0,0) and so it parent's, the y coordinate doesn't have to change, otherwise the background parent constraining the objects within the scene would be y-translated.
 		self.backgroundNode.anchorPoint = CGPoint(0.5, 0)
 		self.backgroundNode.name 		= "ShopSceneNode_bg"
+		self.backgroundNode.color = .cyan
 		
 		addChild(self.backgroundNode)
 	}
