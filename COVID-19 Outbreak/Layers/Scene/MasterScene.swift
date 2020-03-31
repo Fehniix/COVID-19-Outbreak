@@ -32,18 +32,22 @@ class MasterScene: SKScene {
 	private var masterSceneNode:	SKSpriteNode! = nil
 	
 	//	Gesture recognisers
-	private var swipeRightGR: UISwipeGestureRecognizer! = nil
-	private var swipeLeftGR: UISwipeGestureRecognizer! = nil
+	private var swipeRightGR: 	UISwipeGestureRecognizer! = nil
+	private var swipeLeftGR: 	UISwipeGestureRecognizer! = nil
+	private var panGR: 			UIPanGestureRecognizer!   = nil
 	
 	//	TabBar controller properties
-	private var currentPageIndex: Int 	= 1
-	private var pages: Int			 	= 3
-	private var pageXOffset: CGFloat! 	= nil
+	private var currentPageIndex: 	Int 		= 1
+	private var pages: 				Int			= 3
+	private var pageXOffset: 		CGFloat! 	= nil
+	
+	//	Pan gesture properties
+	private let velocityThreshold: 	CGFloat = 16
+	private var swiped:				Int	= 0
 	
 	override func didMove(to view: SKView) {
 		//	The scene's width is three times the extended frame
 		self.size = CGSize(width: GlobalReferences.shared.extendedFrame.width * 3, height: view.frame.size.height)
-		
 		//	Creating the masterSceneNode to contain all the other scenes.
 		self.masterSceneNode 				= SKSpriteNode(texture: nil, color: UIColor.clear, size: self.size)
 		self.masterSceneNode.anchorPoint 	= CGPoint(0, 0)
@@ -61,8 +65,6 @@ class MasterScene: SKScene {
 		self.addChild(self.masterSceneNode)
 		self.addChild(self.tabBarNode)
 		
-		//	Add TabBar gesture recognizers
-		self.createGestureRecognizers()
 		self.pageXOffset = GlobalReferences.shared.extendedFrame.width
 	}
 	
@@ -84,42 +86,82 @@ class MasterScene: SKScene {
 		self.researchSceneNode.position = CGPoint(GlobalReferences.shared.extendedFrame.width * 2, 0)
 	}
 	
-	private func createGestureRecognizers() {
-		self.swipeRightGR = UISwipeGestureRecognizer(target: self, action: #selector(handleRightSwipe(gesture:)))
-		self.swipeRightGR.direction = .right
+	private func animatedSwipe(to index: CGFloat) {
+		//	Reminder: the MasterScene's anchorPoint is (0, 0)!
+		//	Moving positively means moving to the left, moving negatively to the right.
+		let pageXPosition: CGFloat = self.pageXOffset * (index - 1) * -1
+		let swipeAction = SKAction.moveTo(x: pageXPosition, duration: 0.3)
+		swipeAction.timingMode = .easeOut
 		
-		self.swipeLeftGR = UISwipeGestureRecognizer(target: self, action: #selector(handleLeftSwipe(gesture:)))
-		self.swipeLeftGR.direction = .left
-		
-		self.view!.addGestureRecognizer(swipeRightGR)
-		self.view!.addGestureRecognizer(swipeLeftGR)
+		self.masterSceneNode.run(swipeAction)
 	}
-}
-
-extension MasterScene {
-	@objc private func handleRightSwipe(gesture: UISwipeGestureRecognizer) {
-		if (currentPageIndex > 0) {
-			let act = SKAction.moveBy(x: pageXOffset, y: 0, duration: 0.3)
-			act.timingMode = .easeInEaseOut
-			
-			self.masterSceneNode.run(act)
-			
-			currentPageIndex -= 1
-		} else {
-			//	can't do it!
+	
+	private func animatedIllegalSwipe() {
+		let pageXPosition: CGFloat = self.pageXOffset * CGFloat(self.currentPageIndex)
+		let panBackAction = SKAction.moveTo(x: pageXPosition, duration: 0.3)
+		panBackAction.timingMode = .easeOut
+	}
+	
+	private func didSwipe(velocity: CGFloat) {
+		//	Default to zero, and update only if swipe is legal
+		self.swiped = 0
+		
+		if velocity < 0 {
+			//	Swipe right, previous page
+			if self.currentPageIndex > 0 {
+				self.swiped = -1
+			}
+		} else if velocity > 0 {
+			//	Swipe left, next page
+			if self.currentPageIndex < self.pages {
+				self.swiped = 1
+			}
 		}
 	}
 	
-	@objc private func handleLeftSwipe(gesture: UISwipeGestureRecognizer) {
-		if (currentPageIndex < pages) {
-			let act = SKAction.moveBy(x: -pageXOffset, y: 0, duration: 0.3)
-			act.timingMode = .easeInEaseOut
-			
-			self.masterSceneNode.run(act)
-			
-			currentPageIndex += 1
+	override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+		let touch 			= touches.first!.location(in: masterSceneNode)
+		let previousTouch 	= touches.first!.previousLocation(in: masterSceneNode)
+		
+		//	Moving leftwards 	-> negative velocity
+		//	Moving rightwards 	-> positive velocity
+		//	Moving leftwards 	-> left swipe 	-> turn to the right
+		//	Moving rightwards 	-> right swipe 	-> turn to the left
+		let velocity = touch.x - previousTouch.x
+		if abs(velocity) > self.velocityThreshold {
+			self.didSwipe(velocity: velocity)
+			if velocity < 0 && self.currentPageIndex < self.pages {
+				//	Swipe right, go to nth-1 tap, only if it's not the first page
+				self.swiped = -1
+			} else if velocity > 0 && self.currentPageIndex > 0 {
+				//	Swipe left, go to nth+1 tab, only if it's not the last page
+				self.swiped = 1
+			}
+		}
+		
+		//	Need to implement bound check to animate exponential upper and lower bounded movements
+		
+		self.masterSceneNode.position.x += velocity
+	}
+	
+	override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+		if self.swiped == 0 {
+			let moveToOriginalPosition 			= SKAction.moveTo(x: self.pageXOffset * self.currentPageIndex, duration: 0.3)
+			moveToOriginalPosition.timingMode 	= .easeOut
+		
+			self.masterSceneNode.run(moveToOriginalPosition)
 		} else {
-			//	can't do it!
+			if swiped == 1 {
+				print(self.currentPageIndex)
+				self.animatedSwipe(to: CGFloat(--self.currentPageIndex))
+				print(self.currentPageIndex)
+				self.swiped = 0
+			} else {
+				print("swipe right before: \(self.currentPageIndex)")
+				self.animatedSwipe(to: CGFloat(++self.currentPageIndex))
+				print("swipe right after: \(self.currentPageIndex)")
+				self.swiped = 0
+			}
 		}
 	}
 }
