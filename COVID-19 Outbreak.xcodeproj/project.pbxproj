@@ -16,7 +16,7 @@
 		14493B37242D5FCA0021CCDF /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14493B36242D5FCA0021CCDF /* TabBar.swift */; };
 		14493B3C242E12A40021CCDF /* MasterScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14493B3B242E12A40021CCDF /* MasterScene.swift */; };
 		14493B3E242E22580021CCDF /* ShopScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14493B3D242E22580021CCDF /* ShopScene.swift */; };
-		14493B40242E238B0021CCDF /* GlobalReferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14493B3F242E238B0021CCDF /* GlobalReferences.swift */; };
+		14493B40242E238B0021CCDF /* References.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14493B3F242E238B0021CCDF /* References.swift */; };
 		14CEB7332430EAF10058F993 /* CGPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CEB7322430EAF10058F993 /* CGPoint.swift */; };
 		14CEB7352430EBD90058F993 /* CGSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CEB7342430EBD90058F993 /* CGSize.swift */; };
 		14CEB7372430F0110058F993 /* SKSpriteNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CEB7362430F0110058F993 /* SKSpriteNode.swift */; };
@@ -62,7 +62,7 @@
 		14493B36242D5FCA0021CCDF /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		14493B3B242E12A40021CCDF /* MasterScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterScene.swift; sourceTree = "<group>"; };
 		14493B3D242E22580021CCDF /* ShopScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopScene.swift; sourceTree = "<group>"; };
-		14493B3F242E238B0021CCDF /* GlobalReferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalReferences.swift; sourceTree = "<group>"; };
+		14493B3F242E238B0021CCDF /* References.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = References.swift; sourceTree = "<group>"; };
 		14CEB7322430EAF10058F993 /* CGPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGPoint.swift; sourceTree = "<group>"; };
 		14CEB7342430EBD90058F993 /* CGSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGSize.swift; sourceTree = "<group>"; };
 		14CEB7362430F0110058F993 /* SKSpriteNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKSpriteNode.swift; sourceTree = "<group>"; };
@@ -195,7 +195,7 @@
 				14E008C12427F000004B4538 /* Assets.xcassets */,
 				14E008C62427F000004B4538 /* Info.plist */,
 				14493B33242D5BBA0021CCDF /* ColorPalette.swift */,
-				14493B3F242E238B0021CCDF /* GlobalReferences.swift */,
+				14493B3F242E238B0021CCDF /* References.swift */,
 				14E008EE2428BFC9004B4538 /* AppTemplate */,
 			);
 			path = "COVID-19 Outbreak";
@@ -379,7 +379,7 @@
 				14493B17242C94F20021CCDF /* CGRect.swift in Sources */,
 				14CEB73D2432070A0058F993 /* Int.swift in Sources */,
 				14493B3C242E12A40021CCDF /* MasterScene.swift in Sources */,
-				14493B40242E238B0021CCDF /* GlobalReferences.swift in Sources */,
+				14493B40242E238B0021CCDF /* References.swift in Sources */,
 				14E008E92427F21C004B4538 /* Debug.swift in Sources */,
 				14CEB7392430F7420058F993 /* ResearchScene.swift in Sources */,
 				14E008EB2428B607004B4538 /* VirusNode.swift in Sources */,

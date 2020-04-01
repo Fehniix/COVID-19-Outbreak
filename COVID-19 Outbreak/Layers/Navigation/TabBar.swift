@@ -20,10 +20,10 @@ class TabBarNode: SKSpriteNode {
 		super.init(
 			texture: SKTexture(imageNamed: "TabBar"),
 			color: UIColor.clear,
-			size: CGSize(GlobalReferences.shared.deviceFrame.width, GlobalReferences.shared.deviceFrame.height / 9.6))
+			size: CGSize(References.shared.deviceFrame.width, References.shared.deviceFrame.height / 9.6))
 		self.anchorPoint = CGPoint(0, 0)
 		
-		let itemNodeSide = GlobalReferences.shared.deviceFrame.height / 12
+		let itemNodeSide = References.shared.deviceFrame.height / 12
 		let padding = self.frame.width / 6
 		
 		self.shopItemNode = SKSpriteNode(

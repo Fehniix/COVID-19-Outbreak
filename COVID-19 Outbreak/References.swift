@@ -8,10 +8,10 @@
 
 import SpriteKit
 
-class GlobalReferences {
+class References {
 	
 	//	Singleton pattern to share global references, such as device frame etc.
-	public static let shared: GlobalReferences = GlobalReferences()
+	public static let shared: References = References()
 	
 	//	References
 	public var deviceFrame: CGRect! {
@@ -26,7 +26,11 @@ class GlobalReferences {
 	}
 	
 	/// iPhone frame += 50% width (25% per side), to allow for animation margin.
-	public var extendedFrame: CGRect! = nil
+	public var extendedFrame: 		CGRect! 	= nil
+	/// Index of the currently displayed Tab
+	public var currentPageIndex: 	Int! 		= 1
+	///	Number of Tabs to show
+	public var pages:				Int!		= 3
 	
 	private init() {}
 }

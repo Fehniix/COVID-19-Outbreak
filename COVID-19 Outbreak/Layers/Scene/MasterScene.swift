@@ -37,8 +37,6 @@ class MasterScene: SKScene {
 	private var masterSceneNode:	SKSpriteNode! = nil
 	
 	//	TabBar controller properties
-	private var currentPageIndex: 	Int 		= 1
-	private var pages: 				Int			= 3
 	private var pageXOffset: 		CGFloat! 	= nil
 	
 	//	Swipe gesture properties
@@ -49,7 +47,7 @@ class MasterScene: SKScene {
 	
 	override func didMove(to view: SKView) {
 		//	The scene's width is three times the extended frame
-		self.size = CGSize(width: GlobalReferences.shared.extendedFrame.width * 3, height: view.frame.size.height)
+		self.size = CGSize(width: References.shared.extendedFrame.width * 3, height: view.frame.size.height)
 		
 		//	Creating the masterSceneNode to contain all the other scenes.
 		self.masterSceneNode 				= SKSpriteNode(texture: nil, color: UIColor.clear, size: self.size)
@@ -68,15 +66,15 @@ class MasterScene: SKScene {
 		self.addChild(self.masterSceneNode)
 		self.addChild(self.tabBarNode)
 		
-		self.pageXOffset 	= GlobalReferences.shared.extendedFrame.width
-		self.swipeThreshold = GlobalReferences.shared.deviceFrame.width / 2
+		self.pageXOffset 	= References.shared.extendedFrame.width
+		self.swipeThreshold = References.shared.deviceFrame.width / 2
 	}
 	
 	private func createTabBar() {
 		self.tabBarNode 			= TabBarNode()
 		self.tabBarNode.zPosition 	= 10
 		self.tabBarNode.anchorPoint = CGPoint(0.5, 0)
-		self.tabBarNode.position	= CGPoint(GlobalReferences.shared.extendedFrame.maxX * 3 / 2, 0)	// "Go to the end of the last scene (*3), and then cut to the middle point (/2)"
+		self.tabBarNode.position	= CGPoint(References.shared.extendedFrame.maxX * 3 / 2, self.view!.frame.minY)	// "Go to the end of the last scene (*3), and then cut to the middle point (/2)"
 	}
 	
 	private func createTabScenes() {
@@ -84,10 +82,10 @@ class MasterScene: SKScene {
 		self.shopSceneNode.position 	= CGPoint(0, 0)
 		
 		self.virusSceneNode 			= VirusScene()
-		self.virusSceneNode.position 	= CGPoint(GlobalReferences.shared.extendedFrame.width, 0)		// Translate the x-coord. to position aside the ShopScene
+		self.virusSceneNode.position 	= CGPoint(References.shared.extendedFrame.width, 0)		// Translate the x-coord. to position aside the ShopScene
 		
 		self.researchSceneNode 			= ResearchScene()
-		self.researchSceneNode.position = CGPoint(GlobalReferences.shared.extendedFrame.width * 2, 0)
+		self.researchSceneNode.position = CGPoint(References.shared.extendedFrame.width * 2, 0)
 	}
 	
 	private func animatedSwipe(to index: Int) {
@@ -111,17 +109,33 @@ class MasterScene: SKScene {
 	}
 	
 	private func canSwipe(deltaTouch: CGFloat) -> Bool {
-		if self.currentPageIndex == 0 && deltaTouch > 0 {
+		if References.shared.currentPageIndex == 0 && deltaTouch > 0 {
 			return false
 		}
-		if self.currentPageIndex == self.pages - 1 && deltaTouch < 0 {
+		if References.shared.currentPageIndex == References.shared.pages - 1 && deltaTouch < 0 {
 			return false
 		}
 		return true
 	}
 	
 	private func mapIndex(index: Int) -> Int {
-		return (index - (self.pages - 1) / 2) * -1
+		//	Pages array interval: 0...n
+		//	Actual translation index necessary:
+		//		- Middle point: 0
+		//		- To the right: n+1
+		//		- To the left: n-1
+		//	Example
+		//
+		//	Page array: 			0, 1, 2, 3, 4
+		//	Translation indices:	2, 1, 0, -1, -2
+		//
+		//	Mapping first gets the cardinality of the neighbourhood centered at the mid point of the page array (if odd it subtracts one),
+		//	in this example it would be 2 (3,4 & 0,1), subtracts the cardinality from the passed index (i.e. 3 => 3 - 2 = 1) and multiplies
+		//	by -1 to respect SpriteKit's coordinate space.
+		if References.shared.pages % 2 == 0 {
+			return (index - References.shared.pages / 2) * -1
+		}
+		return (index - (References.shared.pages - 1) / 2) * -1
 	}
 	
 	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -151,7 +165,7 @@ class MasterScene: SKScene {
 			self.swiped = 0
 			
 			let moveToOriginalPosition 			= SKAction.moveTo(
-				x: self.pageXOffset * self.mapIndex(index: self.currentPageIndex),
+				x: self.pageXOffset * self.mapIndex(index: References.shared.currentPageIndex),
 				duration: 0.3
 			)
 			moveToOriginalPosition.timingMode 	= .easeOut
@@ -159,9 +173,9 @@ class MasterScene: SKScene {
 			self.masterSceneNode.run(moveToOriginalPosition)
 		} else {
 			if swiped == 1 {
-				self.animatedSwipe(to: ++self.currentPageIndex)
+				self.animatedSwipe(to: ++References.shared.currentPageIndex)
 			} else if swiped == -1 {
-				self.animatedSwipe(to: --self.currentPageIndex)
+				self.animatedSwipe(to: --References.shared.currentPageIndex)
 			}
 			self.swiped = 0
 		}

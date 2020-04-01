@@ -11,7 +11,7 @@ import SpriteKit
 class ResearchScene: SKSpriteNode {
 	
 	//	Global References short alias
-	private let globRefs: GlobalReferences 		= GlobalReferences.shared
+	private let globRefs: References 		= References.shared
 	
 	//	Defines the bounds of the scene.
 	private var backgroundNode: SKSpriteNode! 	= nil

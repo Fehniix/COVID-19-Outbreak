@@ -30,7 +30,7 @@ class GameViewController: UIViewController {
 			}
 			
 			//	Setup global references
-			GlobalReferences.shared.deviceFrame = view.bounds
+			References.shared.deviceFrame = view.bounds
 			
 			//	Present Master Scene
 			view.presentScene(scene)
