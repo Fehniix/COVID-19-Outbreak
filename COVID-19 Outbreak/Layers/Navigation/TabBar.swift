@@ -123,25 +123,34 @@ class TabBar: SKSpriteNode {
 		//	Move the activeItemNode to the targeted position
 		let animation = SKAction.moveTo(x: self.itemsDistance * mappedIndex, duration: 0.3)
 		animation.timingMode = .easeInEaseOut
-		self.activeItemNode.run(animation)
 		
 		//	Upscale the target itemNode
 		let upscaleAnimation = SKAction.scale(to: 1.3, duration: 0.3)
 		upscaleAnimation.timingMode = .easeInEaseOut
-		self.mappedNodes[mappedIndex]!.run(upscaleAnimation)
 		
 		//	Downscale the previous itemNode
 		let downscaleAnimation = SKAction.scale(to: 1.0, duration: 0.3)
 		downscaleAnimation.timingMode = .easeInEaseOut
-		self.mappedNodes[TabBar.previousActiveItemIndex]!.run(downscaleAnimation)
 		
 		//	Colorize the active itemNode
 		let colorizeTargetNodeAnim: SKAction = SKAction.colorize(with: UIColor.white, colorBlendFactor: 1.0, duration: 0.3)
-		self.mappedNodes[mappedIndex]!.run(colorizeTargetNodeAnim)
+		colorizeTargetNodeAnim.timingMode = .easeInEaseOut
 		
 		//	Colorize the previous itemNode
 		let colorizePreviousNodeAnim: SKAction = SKAction.colorize(with: ColorPalette.darkest, colorBlendFactor: 1.0, duration: 0.3)
-		self.mappedNodes[TabBar.previousActiveItemIndex]!.run(colorizePreviousNodeAnim)
+		colorizePreviousNodeAnim.timingMode = .easeInEaseOut
+		
+		//	Run animations
+		self.activeItemNode.run(animation)
+		self.mappedNodes[mappedIndex]!.run(upscaleAnimation)
+		self.mappedNodes[mappedIndex]!.run(colorizeTargetNodeAnim)
+		
+		//	The instance in which the game was just launched has the previousActiveItemIndex and currentActiveItemIndex equals to zero.
+		//	I don't want both animations to be applied on cancel to the same item, the starting one.
+		if mappedIndex != TabBar.previousActiveItemIndex {
+			self.mappedNodes[TabBar.previousActiveItemIndex]!.run(downscaleAnimation)
+			self.mappedNodes[TabBar.previousActiveItemIndex]!.run(colorizePreviousNodeAnim)
+		}
 	}
 	
 	static public func mapIndex(index: Int) -> Int {
