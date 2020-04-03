@@ -26,7 +26,7 @@ A little note on coordinates.
 */
 class MasterScene: SKScene {
 	//	Tab Bar
-	private var tabBarNode:			SKSpriteNode! = nil
+	private var tabBarNode:			TabBar! = nil
 	
 	//	Scenes to switch between
 	private var shopSceneNode: 		SKSpriteNode! = nil
@@ -71,7 +71,7 @@ class MasterScene: SKScene {
 	}
 	
 	private func createTabBar() {
-		self.tabBarNode 			= TabBarNode()
+		self.tabBarNode 			= TabBar(barPadding: self.frame.width / 5.6)
 		self.tabBarNode.zPosition 	= 10
 		self.tabBarNode.anchorPoint = CGPoint(0.5, 0)
 		self.tabBarNode.position	= CGPoint(References.shared.extendedFrame.maxX * 3 / 2, self.view!.frame.minY)	// "Go to the end of the last scene (*3), and then cut to the middle point (/2)"
@@ -91,11 +91,13 @@ class MasterScene: SKScene {
 	private func animatedSwipe(to index: Int) {
 		//	Reminder: the MasterScene's anchorPoint is (0, 0)!
 		//	Moving positively means moving to the left, moving negatively to the right.
-		if Debug.debugActive { print("[Swipe] Move to page index: \(index), mapped: \(self.mapIndex(index: index))") }
-		let swipeAction = SKAction.moveTo(x: self.pageXOffset * self.mapIndex(index: index), duration: 0.3)
+		if Debug.debugActive { print("[Swipe] Move to page index: \(index), mapped: \(TabBar.mapIndex(index: index))") }
+		
+		let swipeAction = SKAction.moveTo(x: self.pageXOffset * TabBar.mapIndex(index: index), duration: 0.3)
 		swipeAction.timingMode = .easeOut
 		
 		self.masterSceneNode.run(swipeAction)
+		self.tabBarNode.animatedActiveItemChange(to: TabBar.currentPageMappedIndex)
 	}
 	
 	private func didSwipe(deltaTouch: CGFloat) {
@@ -106,36 +108,18 @@ class MasterScene: SKScene {
 			//	Swipe right, previous page
 			self.swiped = -1
 		}
+		
+		if (Debug.debugActive) { print("Swiped: \(self.swiped)") }
 	}
 	
 	private func canSwipe(deltaTouch: CGFloat) -> Bool {
-		if References.shared.currentPageIndex == 0 && deltaTouch > 0 {
+		if TabBar.currentPageIndex == 0 && deltaTouch > 0 {
 			return false
 		}
-		if References.shared.currentPageIndex == References.shared.pages - 1 && deltaTouch < 0 {
+		if TabBar.currentPageIndex == TabBar.pages - 1 && deltaTouch < 0 {
 			return false
 		}
 		return true
-	}
-	
-	private func mapIndex(index: Int) -> Int {
-		//	Pages array interval: 0...n
-		//	Actual translation index necessary:
-		//		- Middle point: 0
-		//		- To the right: n+1
-		//		- To the left: n-1
-		//	Example
-		//
-		//	Page array: 			0, 1, 2, 3, 4
-		//	Translation indices:	2, 1, 0, -1, -2
-		//
-		//	Mapping first gets the cardinality of the neighbourhood centered at the mid point of the page array (if odd it subtracts one),
-		//	in this example it would be 2 (3,4 & 0,1), subtracts the cardinality from the passed index (i.e. 3 => 3 - 2 = 1) and multiplies
-		//	by -1 to respect SpriteKit's coordinate space.
-		if References.shared.pages % 2 == 0 {
-			return (index - References.shared.pages / 2) * -1
-		}
-		return (index - (References.shared.pages - 1) / 2) * -1
 	}
 	
 	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -157,25 +141,28 @@ class MasterScene: SKScene {
 		}
 		
 		self.masterSceneNode.position.x += deltaTouch
+		self.tabBarNode.updateActiveItem(deltaTouch: deltaTouch)
 	}
 	
 	override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
 		//	Return to original position, swipe was canceled
-		if self.swiped == 0 || abs(self.initialXPosition - self.masterSceneNode.position.x) < self.swipeThreshold {
+		let deltaPosition = self.initialXPosition - self.masterSceneNode.position.x
+		if self.swiped == 0 || abs(deltaPosition) < self.swipeThreshold || deltaPosition.sign != self.swiped.sign {
 			self.swiped = 0
 			
 			let moveToOriginalPosition 			= SKAction.moveTo(
-				x: self.pageXOffset * self.mapIndex(index: References.shared.currentPageIndex),
+				x: self.pageXOffset * TabBar.mapIndex(index: TabBar.currentPageIndex),
 				duration: 0.3
 			)
 			moveToOriginalPosition.timingMode 	= .easeOut
 		
 			self.masterSceneNode.run(moveToOriginalPosition)
+			self.tabBarNode.resetActiveItem()
 		} else {
 			if swiped == 1 {
-				self.animatedSwipe(to: ++References.shared.currentPageIndex)
+				self.animatedSwipe(to: ++TabBar.currentPageIndex)
 			} else if swiped == -1 {
-				self.animatedSwipe(to: --References.shared.currentPageIndex)
+				self.animatedSwipe(to: --TabBar.currentPageIndex)
 			}
 			self.swiped = 0
 		}

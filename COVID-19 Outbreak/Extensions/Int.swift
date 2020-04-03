@@ -7,6 +7,23 @@
 //
 
 extension Int {
+	enum Sign: Int {
+		case plus
+		case minus
+		
+		@inlinable static func == (lhs: FloatingPointSign, rhs: Sign) -> Bool {
+			return lhs.rawValue == rhs.rawValue
+		}
+		
+		@inlinable static func != (lhs: FloatingPointSign, rhs: Sign) -> Bool {
+			return lhs.rawValue != rhs.rawValue
+		}
+	}
+	
+	var sign: Sign {
+		return (self > 0) ? .plus : .minus
+	}
+	
 	static prefix func --(rhs: inout Int) -> Int {
 		rhs -= 1
 		return rhs

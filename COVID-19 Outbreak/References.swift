@@ -27,10 +27,6 @@ class References {
 	
 	/// iPhone frame += 50% width (25% per side), to allow for animation margin.
 	public var extendedFrame: 		CGRect! 	= nil
-	/// Index of the currently displayed Tab
-	public var currentPageIndex: 	Int! 		= 1
-	///	Number of Tabs to show
-	public var pages:				Int!		= 3
 	
 	private init() {}
 }
